@@ -4,7 +4,10 @@ import { CreateBeneficiarioDto } from './dto/create-beneficiario.dto';
 import { UpdateBeneficiarioDto } from './dto/update-beneficiario.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { Role } from 'src/common/enums/rol.enum';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
+@ApiTags('beneficiarios')
 @Auth(Role.ADMIN)
 @Controller('beneficiarios')
 export class BeneficiariosController {

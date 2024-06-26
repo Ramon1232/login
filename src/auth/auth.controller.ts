@@ -9,6 +9,7 @@ import { RolesGuard } from './guard/roles.guard';
 import { Role } from '../common/enums/rol.enum';
 import { Auth } from './decorators/auth.decorator';
 import { ActiveUser } from 'src/common/decorators/active-user-decorator';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 interface RequestWithUser extends Request {
     user: { 
@@ -17,6 +18,7 @@ interface RequestWithUser extends Request {
     };
 }
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
 
@@ -40,6 +42,7 @@ export class AuthController {
         return this.authService.login(loginDto);
     }
 
+    @ApiBearerAuth()
     @Get('profile')
     @Auth(Role.USER)
     profile(@ActiveUser() user){
