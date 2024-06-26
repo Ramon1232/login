@@ -14,15 +14,17 @@ async function bootstrap() {
     })
   );
 
+  app.enableCors()
+
   const config = new DocumentBuilder()
-    .setTitle("Cats example")
-    .setDescription("The cats API description")
+    .setTitle("Login example")
+    .setDescription("Example of login basic")
     .setVersion("1.0")
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("docs", app, document);
 
-  await app.listen(3000);
+  await app.listen(5000);
 }
 bootstrap();
