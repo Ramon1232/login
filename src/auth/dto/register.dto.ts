@@ -11,6 +11,8 @@ export class RegisterDto{
 
     @Transform(({ value }) => value.trim())
     @IsString()
-    @MinLength(8)
     password: string;
+
+    @IsString()
+    role: string;
 }

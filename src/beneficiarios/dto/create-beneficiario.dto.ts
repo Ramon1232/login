@@ -1,20 +1,99 @@
-import { IsNumber, IsString } from "class-validator";
-
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBeneficiarioDto {
+  @ApiProperty()
+  curp: string;
 
-    @IsNumber()
-    folio: number;
+  @ApiProperty()
+  primerApellido: string;
 
-    @IsString()
-    curp: string;
+  @ApiProperty()
+  segundoApellido: string;
 
-    @IsString()
-    nombre: string;
+  @ApiProperty()
+  nombre: string;
 
-    @IsString()
-    estatus: string;
+  @ApiProperty()
+  fechaNac: number;
 
-    @IsString()
-    programa: string;
+  @ApiProperty()
+  cveEntNac: string;
+
+  @ApiProperty()
+  sexo: string;
+
+  @ApiProperty()
+  discapacidad: string;
+
+  @ApiProperty()
+  indigena: string;
+
+  @ApiProperty()
+  cveCivil: number;
+
+  @ApiProperty()
+  cveDependencia: number;
+
+  @ApiProperty()
+  cveInstitucion: string;
+
+  @ApiProperty()
+  cvePrograma: string;
+
+  @ApiProperty()
+  cveIntraPrograma: number;
+
+  @ApiProperty()
+  cveEntFed: number;
+
+  @ApiProperty()
+  cveMunicipio: number;
+
+  @ApiProperty()
+  cveLocalidad: number;
+
+  @ApiProperty()
+  fechaBeneficio: number;
+
+  @ApiProperty()
+  cveTipoBeneficiario: number;
+
+  @ApiProperty()
+  cveTipoBeneficio: number;
+
+  @ApiProperty()
+  cantidadApoyo: number;
+
+  @ApiProperty()
+  tipoVial: string;
+
+  @ApiProperty()
+  nomVial: string;
+
+  @ApiProperty()
+  numIntNum: string;
+
+  @ApiProperty()
+  numIntAlf: string;
+
+  @ApiProperty()
+  nomLoc: string;
+
+  @ApiProperty()
+  cveLoc: string;
+
+  @ApiProperty()
+  nomMun: string;
+
+  @ApiProperty()
+  cveMun: string;
+
+  @ApiProperty()
+  nomEnt: string;
+
+  @ApiProperty()
+  cveEnt: string;
+
+  @ApiProperty()
+  observaciones: string;
 }
