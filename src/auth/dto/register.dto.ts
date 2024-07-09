@@ -5,6 +5,9 @@ export class RegisterDto{
     
     @IsString()
     name: string;
+
+    @IsString()
+    lastname: string;
     
     @IsEmail()
     email: string;
@@ -14,5 +17,5 @@ export class RegisterDto{
     password: string;
 
     @IsString()
-    role: string;
+    number: string;
 }

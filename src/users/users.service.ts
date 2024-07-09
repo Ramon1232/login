@@ -2,15 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import { Users } from './entities/user.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
 
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectRepository(Users)
+    private readonly userRepository: Repository<Users>,
   ){}
 
   create(createUserDto: CreateUserDto) {
@@ -24,7 +24,7 @@ export class UsersService {
   findOneByEmailWithPassword(email: string){
     return this.userRepository.findOne({
         where: {email},
-        select: ['id', 'name', 'email', 'password', 'role']
+        select: ['id_user', 'name', 'email', 'password', 'role']
     });
   }
 

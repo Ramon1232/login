@@ -1,99 +1,26 @@
-import { ApiProperty } from '@nestjs/swagger';
+// create-beneficiario.dto.ts
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateBeneficiarioDto {
-  @ApiProperty()
+  
   curp: string;
 
-  @ApiProperty()
-  primerApellido: string;
+  primer_apellido: string;
 
-  @ApiProperty()
-  segundoApellido: string;
+  segundo_apellido: string;
 
-  @ApiProperty()
   nombre: string;
 
-  @ApiProperty()
-  fechaNac: number;
+  fecha_nacimiento: string;
 
-  @ApiProperty()
-  cveEntNac: string;
+  cve_ent_nac: string;
 
-  @ApiProperty()
   sexo: string;
-
-  @ApiProperty()
+  
   discapacidad: string;
 
-  @ApiProperty()
   indigena: string;
+  
+  cve_civil: number;
 
-  @ApiProperty()
-  cveCivil: number;
-
-  @ApiProperty()
-  cveDependencia: number;
-
-  @ApiProperty()
-  cveInstitucion: string;
-
-  @ApiProperty()
-  cvePrograma: string;
-
-  @ApiProperty()
-  cveIntraPrograma: number;
-
-  @ApiProperty()
-  cveEntFed: number;
-
-  @ApiProperty()
-  cveMunicipio: number;
-
-  @ApiProperty()
-  cveLocalidad: number;
-
-  @ApiProperty()
-  fechaBeneficio: number;
-
-  @ApiProperty()
-  cveTipoBeneficiario: number;
-
-  @ApiProperty()
-  cveTipoBeneficio: number;
-
-  @ApiProperty()
-  cantidadApoyo: number;
-
-  @ApiProperty()
-  tipoVial: string;
-
-  @ApiProperty()
-  nomVial: string;
-
-  @ApiProperty()
-  numIntNum: string;
-
-  @ApiProperty()
-  numIntAlf: string;
-
-  @ApiProperty()
-  nomLoc: string;
-
-  @ApiProperty()
-  cveLoc: string;
-
-  @ApiProperty()
-  nomMun: string;
-
-  @ApiProperty()
-  cveMun: string;
-
-  @ApiProperty()
-  nomEnt: string;
-
-  @ApiProperty()
-  cveEnt: string;
-
-  @ApiProperty()
-  observaciones: string;
 }
