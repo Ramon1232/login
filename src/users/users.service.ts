@@ -24,7 +24,7 @@ export class UsersService {
   findOneByEmailWithPassword(email: string){
     return this.userRepository.findOne({
         where: {email},
-        select: ['id_user', 'name', 'email', 'password', 'role']
+        select: ['id_user', 'name', 'email', 'password', 'role', 'dependencia']
     });
   }
 

@@ -31,9 +31,12 @@ export class Users {
     role: Role;
 
     @Column({ length: 15, nullable: true })
-    @IsOptional()
     @IsString()
     number: string;
+
+    @Column({ length: 50, default: 'sebien' })
+    @IsString()
+    dependencia: string;
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     @IsDate()

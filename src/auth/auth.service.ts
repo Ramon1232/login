@@ -11,44 +11,51 @@ export class AuthService {
     constructor(
         private readonly usersService: UsersService,
         private readonly jwtService: JwtService,
-    ){}
+    ) { }
 
-    async register({name, lastname, email, password, number, }: RegisterDto){
+    async register({ name, lastname, email, password, number, }: RegisterDto) {
         const user = await this.usersService.findOneByEmail(email);
-        if(user){
+        if (user) {
             throw new BadRequestException('el usuario ya existe');
         }
         await this.usersService.create({
-            name, 
+            name,
             lastname,
-            email, 
+            email,
             password: await bcrypt.hash(password, 10),
             number
         })
-        return{
+        return {
             name,
             email,
         }
     }
 
-    async login({email, password}: LoginDto){
-        const user = await this.usersService.findOneByEmailWithPassword(email) ;
-        if(!user){
+    async login({ email, password }: LoginDto) {
+        const user = await this.usersService.findOneByEmailWithPassword(email);
+        if (!user) {
             throw new UnauthorizedException('Email incorrecto');
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
-        if(!isPasswordValid){
+        if (!isPasswordValid) {
             throw new UnauthorizedException('Contraseña incorrecta');
         }
-        const payload = {email: user.email, role: user.role}
+        const payload: { email: string; role: string; dependencia?: string } = {
+            email: user.email,
+            role: user.role,
+        };
+        if (user.dependencia) {
+            payload.dependencia = user.dependencia;
+        }
         const token = await this.jwtService.signAsync(payload);
         return {
             token,
-            email
+            email: user.email,
+            dependencia: user.dependencia || null, // Incluir dependencia en la respuesta si está disponible
         };
     }
 
-    async profile({email, role}: {email: string, role: string}){
+    async profile({ email, role }: { email: string, role: string }) {
         // if(role !== 'admin'){
         //     throw new UnauthorizedException('You are not authorized to access');
         // }
