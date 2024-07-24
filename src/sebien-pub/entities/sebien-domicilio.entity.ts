@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 't
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { SebienBeneficiario } from './sebien-beneficiario.entity';
 
-@Entity('identificacion_domicilio_geografico_sebien') // Nombre de la tabla en la base de datos
+@Entity('identificacion_domicilio_geografico_sebien')
 export class SebienDomicilioBeneficiario {
   @PrimaryGeneratedColumn()
   id: number;

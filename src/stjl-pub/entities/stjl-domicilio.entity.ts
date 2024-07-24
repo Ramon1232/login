@@ -22,7 +22,7 @@ export class StjlDomicilioBeneficiario {
   @IsNotEmpty()
   num_int_num: string;
 
-  @Column({ length: 35 })
+  @Column({ length: 35, nullable: true })
   @IsString()
   num_int_alf: string;
 
