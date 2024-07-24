@@ -44,7 +44,7 @@ export class AuthController {
 
     @ApiBearerAuth()
     @Get('profile')
-    @Auth(Role.ADMIN)
+    @Auth(Role.OPERATIVO)
     profile(@ActiveUser() user){
         return this.authService.profile(user);
     }

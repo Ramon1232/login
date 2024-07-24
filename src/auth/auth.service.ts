@@ -4,6 +4,7 @@ import { RegisterDto } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
+import { Role } from 'src/common/enums/rol.enum';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
         private readonly jwtService: JwtService,
     ) { }
 
-    async register({ name, lastname, email, password, number, }: RegisterDto) {
+    async register({ name, lastname, email, password, role, number, dependencia }: RegisterDto) {
         const user = await this.usersService.findOneByEmail(email);
         if (user) {
             throw new BadRequestException('el usuario ya existe');
@@ -23,7 +24,9 @@ export class AuthService {
             lastname,
             email,
             password: await bcrypt.hash(password, 10),
-            number
+            role,
+            number,
+            dependencia,
         })
         return {
             name,

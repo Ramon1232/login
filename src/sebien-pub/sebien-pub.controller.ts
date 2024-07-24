@@ -29,7 +29,7 @@ export class SebienPubController {
   }
 
   @Post('post-excel')
-  // @Auth(Role.OPERATIVO)
+  @Auth(Role.OPERATIVO)
   async importarExcel(
     @Body() beneficiarios: CreateSebienBeneficiarioDto[],
     @Body() beneficios: CreateSebienBeneficioDto[],
@@ -45,6 +45,7 @@ export class SebienPubController {
   }
 
   @Get()
+  @Auth(Role.OPERATIVO)
   async findAll(): Promise<any> {
     return this.sebienPubService.findAllWithRelations();
   }
