@@ -22,7 +22,7 @@ export class InjuveDomicilioBeneficiario {
   @IsNotEmpty()
   num_int_num: string;
 
-  @Column({ length: 35 })
+  @Column({ length: 35, nullable: true })
   @IsString()
   num_int_alf: string;
 
@@ -56,7 +56,7 @@ export class InjuveDomicilioBeneficiario {
   @IsNotEmpty()
   cve_ent: string;
 
-  @Column({ length: 255 })
+  @Column({ length: 255, nullable: true })
   @IsString()
   observaciones: string;
 

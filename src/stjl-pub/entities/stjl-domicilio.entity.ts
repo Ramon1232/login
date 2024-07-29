@@ -56,7 +56,7 @@ export class StjlDomicilioBeneficiario {
   @IsNotEmpty()
   cve_ent: string;
 
-  @Column({ length: 255 })
+  @Column({ length: 255, nullable: true })
   @IsString()
   observaciones: string;
 

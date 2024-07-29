@@ -15,7 +15,7 @@ export class SebienPubController {
   constructor(private readonly sebienPubService: SebienPubService) { }
 
   @Post('post')
-  // @Auth(Role.OPERATIVO)
+  @Auth(Role.OPERATIVO)
   async createWithRelation(
     @Body() createBeneficiarioDto: CreateSebienBeneficiarioDto,
     @Body() createBeneficioDto: CreateSebienBeneficioDto,

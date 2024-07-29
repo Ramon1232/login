@@ -52,40 +52,95 @@ export class DifPubService {
     domiciliosDto: CreateDifDomicilioDto[],
   ): Promise<any[]> {
     const resultados = [];
-
+  
     for (let i = 0; i < beneficiariosDto.length; i++) {
       const beneficiarioDto = beneficiariosDto[i];
       const beneficioDto = beneficiosDto[i];
       const domicilioDto = domiciliosDto[i];
-
-      const existingBeneficiario = await this.beneficiarioRepository.findOne({ where: { curp: beneficiarioDto.curp } });
-    if (existingBeneficiario) {
-      throw new ConflictException(`Ya existe un beneficiario con la CURP: ${beneficiarioDto.curp}`);
-    }
-
-      const beneficiario = new DifBeneficiario();
-      Object.assign(beneficiario, beneficiarioDto);
-      const savedBeneficiario = await this.beneficiarioRepository.save(beneficiario);
-
-      const beneficio = new DifBeneficio();
-      Object.assign(beneficio, beneficioDto);
-      beneficio.beneficiario = savedBeneficiario;
-      const savedBeneficio = await this.beneficioRepository.save(beneficio);
-
-      const domicilio = new DifDomicilioBeneficiario();
-      Object.assign(domicilio, domicilioDto);
-      domicilio.beneficiario = savedBeneficiario;
-      const savedDomicilio = await this.domicilioRepository.save(domicilio);
-
-      resultados.push({
-        beneficiario: savedBeneficiario,
-        beneficio: savedBeneficio,
-        domicilio: savedDomicilio,
+  
+      console.log(`Processing CURP: ${beneficiarioDto.curp}`);
+  
+      const existingBeneficiario = await this.beneficiarioRepository.findOne({
+        where: { curp: beneficiarioDto.curp },
       });
+  
+      if (existingBeneficiario) {
+        console.log(`Beneficiario with CURP ${beneficiarioDto.curp} already exists.`);
+        throw new ConflictException(`Ya existe un beneficiario con la CURP: ${beneficiarioDto.curp}`);
+      }
+  
+      try {
+        const beneficiario = new DifBeneficiario();
+        Object.assign(beneficiario, beneficiarioDto);
+        const savedBeneficiario = await this.beneficiarioRepository.save(beneficiario);
+        console.log(`Saved beneficiario: ${savedBeneficiario}`);
+  
+        const beneficio = new DifBeneficio();
+        Object.assign(beneficio, beneficioDto);
+        beneficio.beneficiario = savedBeneficiario;
+        const savedBeneficio = await this.beneficioRepository.save(beneficio);
+        console.log(`Saved beneficio: ${savedBeneficio}`);
+  
+        const domicilio = new DifDomicilioBeneficiario();
+        Object.assign(domicilio, domicilioDto);
+        domicilio.beneficiario = savedBeneficiario;
+        const savedDomicilio = await this.domicilioRepository.save(domicilio);
+        console.log(`Saved domicilio: ${savedDomicilio}`);
+  
+        resultados.push({
+          beneficiario: savedBeneficiario,
+          beneficio: savedBeneficio,
+          domicilio: savedDomicilio,
+        });
+      } catch (error) {
+        console.error(`Error saving data for CURP ${beneficiarioDto.curp}:`, error);
+        throw error;
+      }
     }
-
+  
     return resultados;
   }
+
+  // async createMultipleWithRelation(
+  //   beneficiariosDto: CreateDifBeneficiarioDto[],
+  //   beneficiosDto: CreateDifBeneficioDto[],
+  //   domiciliosDto: CreateDifDomicilioDto[],
+  // ): Promise<any[]> {
+  //   const resultados = [];
+
+  //   for (let i = 0; i < beneficiariosDto.length; i++) {
+  //     const beneficiarioDto = beneficiariosDto[i];
+  //     const beneficioDto = beneficiosDto[i];
+  //     const domicilioDto = domiciliosDto[i];
+
+  //     const existingBeneficiario = await this.beneficiarioRepository.findOne({ where: { curp: beneficiarioDto.curp } });
+  //   if (existingBeneficiario) {
+  //     throw new ConflictException(`Ya existe un beneficiario con la CURP: ${beneficiarioDto.curp}`);
+  //   }
+
+  //     const beneficiario = new DifBeneficiario();
+  //     Object.assign(beneficiario, beneficiarioDto);
+  //     const savedBeneficiario = await this.beneficiarioRepository.save(beneficiario);
+
+  //     const beneficio = new DifBeneficio();
+  //     Object.assign(beneficio, beneficioDto);
+  //     beneficio.beneficiario = savedBeneficiario;
+  //     const savedBeneficio = await this.beneficioRepository.save(beneficio);
+
+  //     const domicilio = new DifDomicilioBeneficiario();
+  //     Object.assign(domicilio, domicilioDto);
+  //     domicilio.beneficiario = savedBeneficiario;
+  //     const savedDomicilio = await this.domicilioRepository.save(domicilio);
+
+  //     resultados.push({
+  //       beneficiario: savedBeneficiario,
+  //       beneficio: savedBeneficio,
+  //       domicilio: savedDomicilio,
+  //     });
+  //   }
+
+  //   return resultados;
+  // }
 
   async findAllWithRelations(): Promise<any> {
     const beneficiarios = await this.beneficiarioRepository.find({
