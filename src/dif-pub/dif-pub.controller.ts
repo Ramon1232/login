@@ -4,13 +4,17 @@ import { UpdateDifPubDto } from './dto/update-dif-pub.dto';
 import { CreateDifBeneficiarioDto } from './dto/create-dif-beneficiario.dto';
 import { CreateDifBeneficioDto } from './dto/create-dif-beneficio.dto';
 import { CreateDifDomicilioDto } from './dto/create-dif-domicilio.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { Role } from 'src/common/enums/rol.enum';
 
+@ApiBearerAuth()
 @Controller('dif-pub')
 export class DifPubController {
   constructor(private readonly difPubService: DifPubService) {}
 
   @Post('post')
-  // @Auth(Role.OPERATIVO)
+  @Auth(Role.OPERATIVO)
   async createWithRelation(
     @Body() createBeneficiarioDto: CreateDifBeneficiarioDto,
     @Body() createBeneficioDto: CreateDifBeneficioDto,
@@ -24,7 +28,7 @@ export class DifPubController {
   }
 
   @Post('post-excel')
-  // @Auth(Role.OPERATIVO)
+  @Auth(Role.OPERATIVO)
   async importarExcel(
     @Body() beneficiarios: CreateDifBeneficiarioDto[],
     @Body() beneficios: CreateDifBeneficioDto[],
@@ -40,6 +44,7 @@ export class DifPubController {
   }
 
   @Get()
+  @Auth(Role.OPERATIVO)
   async findAll(): Promise<any> {
     return this.difPubService.findAllWithRelations();
   }

@@ -4,13 +4,17 @@ import { UpdateStjlPubDto } from './dto/update-stjl-pub.dto';
 import { CreateStjlBeneficiarioDto } from './dto/create-stjl-beneficiario.dto';
 import { CreateStjlBeneficioDto } from './dto/create-stjl-beneficio.dto';
 import { CreateStjlDomicilioDto } from './dto/create-stjl-domicilio.dto';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { Role } from 'src/common/enums/rol.enum';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+@ApiBearerAuth()
 @Controller('stjl-pub')
 export class StjlPubController {
   constructor(private readonly stjlPubService: StjlPubService) {}
 
   @Post('post')
-  // @Auth(Role.OPERATIVO)
+  @Auth(Role.OPERATIVO)
   async createWithRelation(
     @Body() createBeneficiarioDto: CreateStjlBeneficiarioDto,
     @Body() createBeneficioDto: CreateStjlBeneficioDto,
@@ -24,7 +28,7 @@ export class StjlPubController {
   }
 
   @Post('post-excel')
-  // @Auth(Role.OPERATIVO)
+  @Auth(Role.OPERATIVO)
   async importarExcel(
     @Body() beneficiarios: CreateStjlBeneficiarioDto[],
     @Body() beneficios: CreateStjlBeneficioDto[],
@@ -40,6 +44,7 @@ export class StjlPubController {
   }
 
   @Get()
+  @Auth(Role.OPERATIVO)
   async findAll(): Promise<any> {
     return this.stjlPubService.findAllWithRelations();
   }

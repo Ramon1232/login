@@ -4,13 +4,17 @@ import { UpdateCecanPubDto } from './dto/update-cecan-pub.dto';
 import { CreateCecanBeneficiarioDto } from './dto/create-cecan-beneficiario.dto';
 import { CreateCecanBeneficioDto } from './dto/create-cecan-beneficio.dto';
 import { CreateCecanDomicilioDto } from './dto/create-cecan.domicilio.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { Role } from 'src/common/enums/rol.enum';
 
+@ApiBearerAuth()
 @Controller('cecan-pub')
 export class CecanPubController {
   constructor(private readonly cecanPubService: CecanPubService) {}
 
   @Post('post')
-  // @Auth(Role.OPERATIVO)
+  @Auth(Role.OPERATIVO)
   async createWithRelation(
     @Body() createBeneficiarioDto: CreateCecanBeneficiarioDto,
     @Body() createBeneficioDto: CreateCecanBeneficioDto,
@@ -24,7 +28,7 @@ export class CecanPubController {
   }
 
   @Post('post-excel')
-  // @Auth(Role.OPERATIVO)
+  @Auth(Role.OPERATIVO)
   async importarExcel(
     @Body() beneficiarios: CreateCecanBeneficiarioDto[],
     @Body() beneficios: CreateCecanBeneficioDto[],
@@ -40,6 +44,7 @@ export class CecanPubController {
   }
 
   @Get()
+  @Auth(Role.OPERATIVO)
   async findAll(): Promise<any> {
     return this.cecanPubService.findAllWithRelations();
   }

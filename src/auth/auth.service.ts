@@ -54,7 +54,8 @@ export class AuthService {
         return {
             token,
             email: user.email,
-            dependencia: user.dependencia || null, // Incluir dependencia en la respuesta si está disponible
+            dependencia: user.dependencia || null,
+            role: user.role,
         };
     }
 

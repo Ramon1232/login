@@ -4,13 +4,17 @@ import { UpdateInjuvePubDto } from './dto/update-injuve-pub.dto';
 import { CreateInjuveBeneficiarioDto } from './dto/create-injuve-beneficiario.dto';
 import { CreateInjuveBeneficioDto } from './dto/create-injuve-beneficio.dto';
 import { CreateInjuveDomicilioDto } from './dto/create-injuve-domicilio.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { Role } from 'src/common/enums/rol.enum';
 
+@ApiBearerAuth()
 @Controller('injuve-pub')
 export class InjuvePubController {
   constructor(private readonly injuvePubService: InjuvePubService) {}
 
   @Post('post')
-  // @Auth(Role.OPERATIVO)
+  @Auth(Role.OPERATIVO)
   async createWithRelation(
     @Body() createBeneficiarioDto: CreateInjuveBeneficiarioDto,
     @Body() createBeneficioDto: CreateInjuveBeneficioDto,
@@ -24,7 +28,7 @@ export class InjuvePubController {
   }
 
   @Post('post-excel')
-  // @Auth(Role.OPERATIVO)
+  @Auth(Role.OPERATIVO)
   async importarExcel(
     @Body() beneficiarios: CreateInjuveBeneficiarioDto[],
     @Body() beneficios: CreateInjuveBeneficioDto[],

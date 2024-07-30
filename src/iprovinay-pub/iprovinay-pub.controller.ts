@@ -4,13 +4,17 @@ import { UpdateIprovinayPubDto } from './dto/update-iprovinay-pub.dto';
 import { CreateIprovinayBeneficiarioDto } from './dto/create-iprovinay-beneficiario.dto';
 import { CreateIprovinayBeneficioDto } from './dto/create-iprovinay-beneficio.dto';
 import { CreateIprovinayDomicilioDto } from './dto/create-iprovinay-domicilio.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { Role } from 'src/common/enums/rol.enum';
 
+@ApiBearerAuth()
 @Controller('iprovinay-pub')
 export class IprovinayPubController {
   constructor(private readonly iprovinayPubService: IprovinayPubService) {}
 
   @Post('post')
-  // @Auth(Role.OPERATIVO)
+  @Auth(Role.OPERATIVO)
   async createWithRelation(
     @Body() createBeneficiarioDto: CreateIprovinayBeneficiarioDto,
     @Body() createBeneficioDto: CreateIprovinayBeneficioDto,
@@ -24,7 +28,7 @@ export class IprovinayPubController {
   }
 
   @Post('post-excel')
-  // @Auth(Role.OPERATIVO)
+  @Auth(Role.OPERATIVO)
   async importarExcel(
     @Body() beneficiarios: CreateIprovinayBeneficiarioDto[],
     @Body() beneficios: CreateIprovinayBeneficioDto[],
@@ -40,6 +44,7 @@ export class IprovinayPubController {
   }
 
   @Get()
+  @Auth(Role.OPERATIVO)
   async findAll(): Promise<any> {
     return this.iprovinayPubService.findAllWithRelations();
   }
