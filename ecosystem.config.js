@@ -2,9 +2,9 @@ module.exports = {
     apps: [
       {
         name: 'nestjs-app',
-        script: './dist/main.js', // Ruta al archivo de entrada JavaScript generado por la compilación
-        instances: 'max', // O un número específico de instancias
-        exec_mode: 'cluster', // Utiliza cluster mode para escalar el número de instancias
+        script: './dist/main.ts',
+        instances: 'max',
+        exec_mode: 'cluster',
         env: {
           NODE_ENV: 'development',
         },
